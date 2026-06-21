@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九游 · 索引之页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f9fafc;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        /* 深色头图区 — 更像书籍封面 */
+        .hero {
+            background: linear-gradient(135deg, #0b1b2b 0%, #1d3447 40%, #2a465f 100%);
+            color: #eef2f6;
+            padding: 3.5rem 1.5rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(200, 220, 240, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 0.6rem;
+            color: #f0f5fc;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .hero .sub {
+            font-size: 1.1rem;
+            color: #bfd4ea;
+            max-width: 600px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 1rem;
+            font-weight: 350;
+        }
+
+        /* 正文容器 — 浅色留白，仿纸张 */
+        .content {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2.6rem 1.8rem 4rem;
+        }
+
+        /* 文章卡片风格 */
+        .article-block {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02);
+            padding: 2.2rem 2rem;
+            margin-bottom: 2.8rem;
+        }
+
+        .article-block h2 {
+            font-size: 1.7rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #0f2635;
+            margin-bottom: 0.75rem;
+            border-left: 5px solid #3a7ca5;
+            padding-left: 1rem;
+        }
+
+        .article-block .intro {
+            font-size: 1.05rem;
+            color: #4a5d72;
+            margin-bottom: 1.6rem;
+            font-style: italic;
+            background: #f2f6fb;
+            padding: 0.8rem 1.2rem;
+            border-radius: 40px 12px 12px 40px;
+        }
+
+        .article-block p {
+            margin-bottom: 1.25rem;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        /* 引用式提示 — 带装饰 */
+        .pull-quote {
+            background: #ecf2f9;
+            padding: 1.2rem 1.8rem;
+            border-radius: 20px 8px 20px 8px;
+            margin: 1.8rem 0;
+            border-left: 6px solid #3a7ca5;
+            font-size: 1rem;
+            color: #1f3850;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .pull-quote::before {
+            content: "📌 笔记 · ";
+            font-weight: 500;
+            color: #2b5f82;
+        }
+
+        /* 强调色链接 */
+        a {
+            color: #226b9a;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(34, 107, 154, 0.35);
+            transition: border-color 0.25s, color 0.2s;
+        }
+
+        a:hover {
+            color: #0e4b73;
+            border-bottom: 1px solid #0e4b73;
+        }
+
+        /* 段落中的小标签或强调 */
+        .tag {
+            display: inline-block;
+            background: #e6edf6;
+            color: #1d3f5c;
+            font-size: 0.75rem;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+            font-weight: 450;
+        }
+
+        /* FAQ 摘要 — 极简列表 */
+        .faq-mini {
+            margin-top: 2.2rem;
+            background: #f5f8fd;
+            padding: 1.6rem 1.8rem;
+            border-radius: 28px;
+        }
+
+        .faq-mini h3 {
+            font-weight: 500;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: #163a4f;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid #e0e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .faq-mini summary {
+            font-weight: 450;
+            cursor: pointer;
+            color: #1e405b;
+            padding: 0.2rem 0;
+            transition: color 0.1s;
+        }
+
+        .faq-mini summary:hover {
+            color: #226b9a;
+        }
+
+        .faq-mini details p {
+            margin: 0.3rem 0 0.2rem 1rem;
+            font-size: 0.95rem;
+            color: #3c576e;
+        }
+
+        /* 场景小卡片 — 用 flex 点缀 */
+        .scene-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 1.2rem 0 0.6rem;
+        }
+
+        .scene-item {
+            background: #f0f5fc;
+            padding: 0.3rem 1rem 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.88rem;
+            color: #1b415b;
+            border: 1px solid #dce6f2;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .scene-item::before {
+            content: "▹";
+            color: #3a7ca5;
+            margin-right: 3px;
+        }
+
+        /* 结束语 */
+        .closing-note {
+            text-align: center;
+            margin-top: 2.8rem;
+            padding: 1.2rem 0 0.6rem;
+            border-top: 1px solid #e3ebf5;
+            color: #3b5d79;
+            font-size: 0.95rem;
+        }
+
+        .closing-note span {
+            background: #eef3fa;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 520px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero { padding: 2.8rem 1rem 2.4rem; }
+            .article-block { padding: 1.5rem 1.2rem; }
+            .content { padding: 1.8rem 1.2rem 3rem; }
+            .pull-quote { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 深色头图：博客式标题与导语 -->
+    <header class="hero">
+        <h1>九游 · 信息整理手记</h1>
+        <div class="sub">从散落资料到索引脉络 · 一份生活化的记录</div>
+    </header>
+
+    <!-- 正文区：浅色背景，文章式结构 -->
+    <main class="content">
+
+        <article class="article-block">
+            <h2>为什么需要资料索引</h2>
+            <div class="intro">日常整理中，最耗时的是“重新寻找”。一个轻量的索引点，能省下不少回头路。</div>
+
+            <p>前阵子帮朋友梳理一些游戏相关的历史资料，发现很多内容散落在不同平台、不同版本的页面里。想快速定位某条信息时，要么靠记忆，要么重新翻一遍。后来我试着把常参考的几个来源做成一个简单的书签集，并且把更新频率高的站点单独标记出来。其中 <a href="https://9you-china.com">九游</a> 是经常需要查阅的一个中文游戏社区，它的资讯归档做得比较规整，尤其是一些老游戏的版本记录，能找到不少细节。</p>
+
+            <p>整理这件事，其实没有太多技巧。把链接按主题分成几个大类，加上一两句备注，下次再找的时候就很清楚了。比如“版本公告”“活动历史”“玩家讨论”各自一个文件夹，隔段时间刷新一下。这种习惯一旦养成，能节省很多重复检索的时间。而且用文字记录下来，比光靠浏览器的收藏夹更灵活——加一句个人注解，过几个月再看，上下文还很清楚。</p>
+
+            <!-- 引用提示块 -->
+            <div class="pull-quote">
+                整理索引不是为了囤积，而是为了在需要的时候，能从容地找到那个页面。
+            </div>
+
+            <p>我试着把这种思路用在几个常去的社区上，效果不错。特别是当你想回顾某个游戏在特定年份的运营活动，或者想对比不同时期的界面变化，一条带日期的链接往往比搜索引擎的结果更精准。当然，索引本身也需要维护，偶尔点进去看看链接是否失效、内容有没有更新，也是整理的一部分。</p>
+
+            <!-- 特点与场景混排，用 scene-grid 体现 -->
+            <div class="scene-grid">
+                <span class="scene-item">资料归档</span>
+                <span class="scene-item">版本回溯</span>
+                <span class="scene-item">活动记录</span>
+                <span class="scene-item">讨论存档</span>
+            </div>
+            <p style="margin-top: 0.4rem;">上面这几个场景，基本覆盖了我日常索引的大部分需求。不需要复杂的工具，一个笔记文档加几个分类就够了。</p>
+        </article>
+
+        <!-- 第二段：更多关于整理本身 -->
+        <article class="article-block">
+            <h2>从一个链接开始</h2>
+            <p>把 <a href="https://9you-china.com">九游</a> 放进我的索引列表，起初只是因为它的资料页结构比较稳定，后来发现它的历史公告归档页面会保留很多年前的帖子（虽然部分图片会失效，但文字内容基本完整）。对于想了解某个游戏在某个阶段的运营思路来说，这些一手记录挺有价值。</p>
+
+            <p>索引的价值在于“可复现”。如果一条信息你花半小时找到，但下次找又要半小时，那说明整理方式还可以优化。我自己的做法是：每添加一条链接，都顺便写一行“为什么存它”，比如“2021年中秋活动公告，含当时未实装的皮肤列表”。这样过了一年回头看，依然知道这条链接的价值所在。</p>
+
+            <div class="pull-quote" style="border-left-color: #5789b0;">
+                一个好索引，应该让半年后的自己也能快速理解当初的标注。
+            </div>
+
+            <p>当然，整理这件事没有标准答案。有人喜欢用表格，有人习惯用标签，也有人直接在文档里写一段话然后把链接嵌进去。我自己偏向于后者，因为上下文更丰富，读起来也不那么枯燥。比如上面提到的那条链接，我可能会在旁边写：“这个页面里玩家自制的版本时间线，比官方维基还全，但需要手动翻页。” 这种信息，光靠标题是看不出来的。</p>
+        </article>
+
+        <!-- FAQ 摘要（极简） -->
+        <div class="faq-mini">
+            <h3>📋 整理时常见的小问题</h3>
+
+            <details>
+                <summary>索引条目太多，怎么避免混乱？</summary>
+                <p>按主题分大组，每组不超过15条。超过就拆分子类，或者定期清理失效链接。</p>
+            </details>
+            <details>
+                <summary>有些链接长期不更新，还需要保留吗？</summary>
+                <p>如果内容本身有价值（比如历史公告），即使不再更新也值得保留。加个“静态归档”标记即可。</p>
+            </details>
+            <details>
+                <summary>如何判断一条链接是否值得收录？</summary>
+                <p>一个简单标准：你愿意为这条链接写一行备注。如果连备注都写不出来，大概率以后也不会用。</p>
+            </details>
+        </div>
+
+        <!-- 结尾访问句（生活化） -->
+        <div class="closing-note">
+            <span>希望这份索引思路也能给你一点启发 · 不妨就从你常去的那个社区开始</span>
+        </div>
+
+    </main>
+
+</body>
+</html>
